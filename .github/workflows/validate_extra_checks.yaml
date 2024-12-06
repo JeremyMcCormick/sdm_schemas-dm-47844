@@ -2,6 +2,11 @@ name: Validate SDM schemas using Felis with Extra Checks
 
 on:
   workflow_dispatch:
+    inputs:
+      branch:
+        description: "Branch to run on"
+        required: true
+        default: "main"
 
 jobs:
   validate-extra-checks:
@@ -10,6 +15,8 @@ jobs:
     steps:
       - name: Check out repo
         uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.inputs.branch }}
 
       - name: Setup Python and install dependencies
         uses: ./.github/actions/setup-test-environment
